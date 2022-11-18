@@ -1,0 +1,57 @@
+@use "../abstracts/mixins" as *;
+
+.link-btn {
+  color: #fff;
+  padding: 0.5em 1em;
+  font-size: 1.7rem;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  text-decoration: none;
+  margin: 0 1em;
+}
+
+.locked-btn {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.start-btn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 0.8em 1em;
+  border-radius: 5px;
+  font-size: 1.6rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  @include mq(laptop) {
+    font-size: 1.4rem;
+  }
+
+  @include mq(medium) {
+    font-size: 1.25rem;
+  }
+
+  @include mq(irrelevant) {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #000;
+  }
+}
+
+.start-btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  /* Screen height responsive margin */
+  margin-top: 30vh;
+}

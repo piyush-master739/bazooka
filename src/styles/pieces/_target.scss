@@ -1,0 +1,28 @@
+@use "../abstracts/mixins" as *;
+
+.target {
+  position: absolute;
+  height: 75px;
+
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
+  @include mq(laptop) {
+    height: 65px;
+  }
+
+  @include mq(medium) {
+    height: 60px;
+  }
+
+  @include mq(small) {
+    height: 55px;
+  }
+
+  @include mq(irrelevant) {
+    height: 40px;
+  }
+}

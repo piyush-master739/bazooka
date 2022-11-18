@@ -1,0 +1,170 @@
+@use "../abstracts/mixins" as *;
+
+.finish-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  border: 1px solid #fff;
+  padding: 3em;
+  text-align: center;
+  color: #252525;
+  background-color: #f2f2f2;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+
+  @include mq(largest) {
+    padding: 2.5em;
+  }
+
+  @include mq(medium) {
+    padding: 2em;
+  }
+
+  @include mq(small) {
+    padding: 1.8em;
+  }
+
+  @include mq(irrelevant) {
+    padding: 1.5em;
+  }
+
+  h2 {
+    margin-bottom: 0.7em;
+    font-size: 2.2rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+
+    @include mq(largest) {
+      font-size: 1.8rem;
+    }
+
+    @include mq(laptop) {
+      font-size: 1.6rem;
+    }
+
+    @include mq(medium) {
+      font-size: 1.4rem;
+    }
+
+    @include mq(small) {
+      font-size: 1.25rem;
+    }
+
+    @include mq(irrelevant) {
+      font-size: 1.1rem;
+    }
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 1em;
+
+    @include mq(largest) {
+      font-size: 1.5rem;
+    }
+
+    @include mq(laptop) {
+      font-size: 1.4rem;
+    }
+
+    @include mq(medium) {
+      font-size: 1.25rem;
+    }
+
+    @include mq(irrelevant) {
+      font-size: 1rem;
+    }
+  }
+
+  a {
+    font-size: 1.7rem;
+    text-decoration: none;
+    color: #535353;
+    transition: all 0.3s ease;
+
+    @include mq(largest) {
+      font-size: 1.4rem;
+    }
+
+    @include mq(laptop) {
+      font-size: 1.3rem;
+    }
+
+    @include mq(medium) {
+      font-size: 1.15rem;
+    }
+
+    @include mq(small) {
+      font-size: 1rem;
+    }
+
+    @include mq(irrelevant) {
+      font-size: 0.85rem;
+    }
+  }
+
+  a:hover {
+    color: #000;
+  }
+
+  span {
+    font-size: 2rem;
+    color: rgb(0, 107, 156);
+    margin-left: 0.3em;
+
+    @include mq(largest) {
+      font-size: 1.7rem;
+    }
+
+    @include mq(medium) {
+      font-size: 1.5rem;
+    }
+
+    @include mq(small) {
+      font-size: 1.3rem;
+    }
+
+    @include mq(irrelevant) {
+      font-size: 1.15rem;
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__warning {
+  font-size: 1.2rem;
+  color: rgb(224, 0, 0);
+  margin-bottom: 1em;
+
+  @include mq(largest) {
+    font-size: 1.1rem;
+  }
+
+  @include mq(laptop) {
+    font-size: 1rem;
+  }
+
+  @include mq(medium) {
+    font-size: 0.9rem;
+  }
+
+  @include mq(small) {
+    font-size: 0.8rem;
+  }
+
+  @include mq(irrelevant) {
+    font-size: 0.7rem;
+  }
+}

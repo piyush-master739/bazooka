@@ -1,0 +1,58 @@
+@use "../../abstracts/mixins" as *;
+
+.btn-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 20em);
+  justify-content: center;
+  margin-top: 5em;
+
+  @include mq(largest) {
+    grid-template-columns: repeat(5, 18em);
+  }
+
+  @include mq(laptop) {
+    grid-template-columns: repeat(5, 16em);
+  }
+
+  @include mq(medium) {
+    grid-template-columns: repeat(5, 14em);
+  }
+
+  @include mq(small) {
+    grid-template-columns: repeat(5, 12em);
+  }
+
+  @include mq(irrelevant) {
+    grid-template-columns: repeat(3, 12em);
+    margin-top: 3em;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 5rem;
+  letter-spacing: 20px;
+  font-family: "Bangers", cursive;
+
+  @include mq(largest) {
+    font-size: 4.5rem;
+  }
+
+  @include mq(laptop) {
+    font-size: 4rem;
+  }
+
+  @include mq(medium) {
+    font-size: 3.5rem;
+  }
+
+  @include mq(small) {
+    margin-top: 1em;
+  }
+
+  @include mq(irrelevant) {
+    margin-top: 0em;
+    font-size: 3rem;
+  }
+}

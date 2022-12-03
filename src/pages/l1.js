@@ -8,21 +8,10 @@ import FinishModal from "../../components/FinishModal";
 import { usePointsContext } from "../../context/context.js";
 
 const iconPathArray = [
-  "/static/icons/bitcoin.png",
-  "/static/icons/ethereum.png",
-  "/static/icons/rose.png",
-  "/static/icons/dollar-symbol.png",
-  "/static/icons/euro.png",
   "/static/icons/pound-sterling.png",
 ];
 
-const LevelTwo = () => {
-  /*
-  ===========
-  STATE HOOKS
-  ===========
-  */
-
+const L1 = () => {
   const [isGameOn, setIsGameOn] = useState(false);
   const [isTargetOn, setIsTargetOn] = useState(false);
   const [targetSpecs, setTargetSpecs] = useState({
@@ -35,52 +24,7 @@ const LevelTwo = () => {
   const [isCountdownOn, setIsCountdownOn] = useState(false);
   const [isGameFinished, setIsGameFinished] = useState(false);
   const [pointsEarned, setPointsEarned] = useState(0);
-
-  /*
-  =======
-  CONTEXT
-  =======
-  */
-
   const { points, updatePoints } = usePointsContext();
-
-  /*
-  ============
-  EFFECT HOOKS
-  ============
-  */
-
-  useEffect(() => {
-    if (isGameOn) {
-      intervalRef.current = setInterval(spawnTarget, 1250);
-    }
-
-    return () => clearInterval(intervalRef.current);
-  }, [isGameOn]);
-
-  useEffect(() => {
-    if (isCountdownOn) {
-      countdownTimerRef.current = setInterval(checkCountdown, 1000);
-    }
-
-    return () => clearInterval(countdownTimerRef.current);
-  }, [isCountdownOn]);
-
-  // USING REF HOOKS TO MAKE UPDATED STATE VALUE WORK INSIDE CALLBACK FUNCTION OF SETINTERVAL
-  useEffect(() => {
-    countdownRef.current = countdown;
-  }, [countdown]);
-
-  useEffect(() => {
-    pointsEarnedRef.current = pointsEarned;
-  }, [pointsEarned]);
-
-  /*
-  =========
-  REF HOOKS
-  =========
-  */
-
   const containerRef = useRef();
   const intervalRef = useRef();
 
@@ -89,11 +33,25 @@ const LevelTwo = () => {
   const countdownRef = useRef();
   const pointsEarnedRef = useRef();
 
-  /*
-  =========
-  FUNCTIONS
-  =========
-  */
+  useEffect(() => {
+    if (isCountdownOn) {
+      countdownTimerRef.current = setInterval(checkCountdown, 1000);
+    }
+
+    return () => clearInterval(countdownTimerRef.current);
+  }, [isCountdownOn]);
+  useEffect(() => {
+    if (isGameOn) {
+      intervalRef.current = setInterval(spawnTarget, 1500);
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [isGameOn]);
+  useEffect(() => {
+    countdownRef.current = countdown;
+  }, [countdown]);
+  useEffect(() => {
+    pointsEarnedRef.current = pointsEarned;
+  }, [pointsEarned]);
 
   const startGame = () => {
     setIsGameOn(true);
@@ -123,48 +81,34 @@ const LevelTwo = () => {
 
   const hitTarget = () => {
     setIsTargetOn(false);
-    if (targetSpecs.isCrypto) setPointsEarned((prev) => prev + 2);
+    if (targetSpecs.isCrypto) setPointsEarned((prev) => prev + 1);
     else {
-      if (pointsEarned > 0) setPointsEarned((prev) => prev - 2);
+      if (pointsEarned > 0) setPointsEarned((prev) => prev - 1);
     }
   };
 
-  const checkCountdown = () => {
+  const countdown =  () => {
     if (countdownRef.current > 0) {
       setCountdown((prev) => prev - 1);
     } else {
       finishGame();
     }
   };
-
-  const finishGame = () => {
-    updatePoints(points + pointsEarnedRef.current);
-    setIsGameOn(false);
-    setIsTargetOn(false);
-    setIsCountdownOn(false);
-    setIsGameFinished(true);
-  };
-
-  /*
-  ======
-  RETURN
-  ======
-  */
-
   return (
     <main>
       <Head>
-        <title>Level Two | Crypto Shooter</title>
+        <title>Level One | Crypto Shooter</title>
         <meta
           name="description"
-          content="Level Two of the game Crypto Shooter"
+          content="Level One of the game Crypto Shooter"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <header className="game-header">
         {!isGameOn && !isGameFinished && (
           <Link href="/">
-            <a className="logo">Crypto Shooter</a>
+            <a className="logo">CRYPTO SHOOTER</a>
           </Link>
         )}
 
@@ -180,22 +124,6 @@ const LevelTwo = () => {
         </div>
       )}
 
-      <div ref={containerRef} className="game-container">
-        {isTargetOn && (
-          <img
-            style={targetSpecs.position}
-            src={targetSpecs.iconPath}
-            alt="target"
-            className="target"
-            onClick={hitTarget}
-            draggable="false"
-          />
-        )}
-      </div>
-
-      {/*THIS IS FOR EMULATING THE EFFECTS OF PRE-CACHING
-      THE IMAGES WERE LAGGING DUE TO CONSTANT RE-DOWNLOADING OF EVERY NEW IMAGE
-      NOT THE CLEANEST CODE, BUT IT DOES THE JOB  */}
       <div style={{ display: "none" }}>
         <img
           src="/static/icons/bitcoin.png"
@@ -234,4 +162,4 @@ const LevelTwo = () => {
   );
 };
 
-export default LevelTwo;
+export default LevelOne;

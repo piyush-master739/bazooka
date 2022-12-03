@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-
+import { NFTStorage, File } from 'nft.storage'
 import { usePointsContext } from "../context/context";
 import { useEffect } from "react";
 
@@ -19,12 +19,6 @@ import {
 } from "../context/accountContext";
 
 export default function Home() {
-  /*
-  ==================
-  CONTEXT AND EFFECT
-  ==================
-  */
-
   const { points, updatePoints } = usePointsContext();
 
   const [accountState, accountDispatch] = useAccountContext();
@@ -33,11 +27,6 @@ export default function Home() {
     checkIfWalletIsConnected(accountDispatch);
   }, []);
 
-  /*
-  =========
-  FUNCTIONS
-  =========
-  */
 
   async function insertTransaction(
     transactionID,
@@ -58,7 +47,7 @@ export default function Home() {
       tokenToClaim: tokenToClaim,
     };
 
-    axios.post("http://localhost:3001/makeTransaction", newTransaction);
+    axios.post("http://localhost:3001/tx", newTransaction);
   }
 
   // Button text
@@ -72,7 +61,7 @@ export default function Home() {
     buttonText = "Connect Wallet";
   }
 
-  const claimbazooka = async () => {
+  const claimBazooka = async () => {
     try {
       const { ethereum } = window;
 
@@ -89,80 +78,14 @@ export default function Home() {
       let transaction = await connectedContract.claimbazooka(
         ethers.utils.parseUnits(tokenToClaim.toString(), "ether")
       );
-
-      /*
-      ==============================================
-      VARIABLES THAT SHOULD BE INSERTED TO
-      DATABASE ALONG WITH tokenToClaim WHICH'S ABOVE
-      ==============================================
-      */
-
       const transactionType = "Reward";
-
       const transactionID = transaction.hash;
-
-      // I'm confused about this, transaction.to seems to be the address Dominic provided,
-      // and transaction.from is my wallet address, isn't it supposed to be the other way around?
-      // For now, I'm switching them up, please correct any mistakes
       const from = transaction.to;
       const to = transaction.from;
-
       const game = "Crypto Shooter";
-
       const d = new Date();
       const date = d.toLocaleDateString() + "-" + d.toLocaleTimeString();
-
       await transaction.wait();
-
-      insertTransaction(
-        transactionID,
-        tokenToClaim,
-        transactionType,
-        from,
-        to,
-        game,
-        date
-      );
-
-      const consoleMsg =
-        "**********************************\n" +
-        "\nTransaction ID: " +
-        transactionID +
-        "\n\nFrom: " +
-        from +
-        "\n\nTo: " +
-        to +
-        "\n\nTransaction Type: " +
-        transactionType +
-        "\n\nbazooka Amount: " +
-        tokenToClaim +
-        "\n\nGame: " +
-        game +
-        "\n\nDate: " +
-        date +
-        "\n\n**********************************";
-
-      /*
-      ===================================================
-      INSERT THE FOLLOWING DATA TO THE TRANSACTIONS TABLE
-
-      string transactionID
-
-      double tokenToClaim: Amount of bazooka tokens claimed
-      
-      string transactionType: Type of transaction processed
-
-      string from: User wallet address
-
-      string to: Wallet address from which bazooka is withdrawn 
-
-      string game: The game in which the bazooka is earned
-
-      string date: Local date and time of transaction
-      ===================================================
-      */
-
-      updatePoints(0);
 
       console.log(transaction);
       console.log(consoleMsg);
@@ -171,17 +94,10 @@ export default function Home() {
     }
   };
 
-  /*
-  ======
-  RETURN
-  ======
-  */
-
   return (
     <>
       <Head>
         <title>Bazooka</title>
-
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -194,9 +110,8 @@ export default function Home() {
               onClick={() => connectWallet(accountDispatch)}
             >
               {accountState.account
-                ? `${formatAccount(accountState?.account.address)} | $ROSE : ${
-                    accountState?.account.balance
-                  }`
+                ? `${formatAccount(accountState?.account.address)} | $ROSE : ${accountState?.account.balance
+                }`
                 : buttonText}
             </button>
             <button className="conversion__btn" onClick={claimbazooka}>
